@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .calendar {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      width: 360px;
+      overflow: hidden;
+    }
+    .header {
+      background: #4f46e5;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+    }
+    .header h2 { font-size: 1.2rem; font-weight: 600; }
+    .nav-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.3rem;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .nav-btn:hover { background: rgba(255,255,255,0.2); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      padding: 16px;
+      gap: 4px;
+    }
+    .day-name {
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #6b7280;
+      padding: 6px 0;
+      text-transform: uppercase;
+    }
+    .day {
+      text-align: center;
+      padding: 10px 4px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      cursor: default;
+      color: #374151;
+    }
+    .day.other-month { color: #d1d5db; }
+    .day.today {
+      background: #4f46e5;
+      color: #fff;
+      font-weight: 700;
+    }
+    .day:not(.other-month):not(.today):hover {
+      background: #e0e7ff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="calendar">
+    <div class="header">
+      <button class="nav-btn" id="prev">&#8249;</button>
+      <h2 id="month-label"></h2>
+      <button class="nav-btn" id="next">&#8250;</button>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+
+  <script>
+    const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const MONTHS = ['January','February','March','April','May','June',
+                    'July','August','September','October','November','December'];
+
+    let current = new Date();
+    current.setDate(1);
+
+    function render() {
+      const year = current.getFullYear();
+      const month = current.getMonth();
+      const today = new Date();
+
+      document.getElementById('month-label').textContent = `${MONTHS[month]} ${year}`;
+
+      const grid = document.getElementById('grid');
+      grid.innerHTML = DAYS.map(d => `<div class="day-name">${d}</div>`).join('');
+
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const daysInPrev = new Date(year, month, 0).getDate();
+
+      // Previous month tail
+      for (let i = firstDay - 1; i >= 0; i--) {
+        grid.innerHTML += `<div class="day other-month">${daysInPrev - i}</div>`;
+      }
+
+      // Current month
+      for (let d = 1; d <= daysInMonth; d++) {
+        const isToday = d === today.getDate() && month === today.getMonth() && year === today.getFullYear();
+        grid.innerHTML += `<div class="day${isToday ? ' today' : ''}">${d}</div>`;
+      }
+
+      // Next month fill
+      const total = firstDay + daysInMonth;
+      const remaining = total % 7 === 0 ? 0 : 7 - (total % 7);
+      for (let d = 1; d <= remaining; d++) {
+        grid.innerHTML += `<div class="day other-month">${d}</div>`;
+      }
+    }
+
+    document.getElementById('prev').addEventListener('click', () => {
+      current.setMonth(current.getMonth() - 1);
+      render();
+    });
+
+    document.getElementById('next').addEventListener('click', () => {
+      current.setMonth(current.getMonth() + 1);
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>
