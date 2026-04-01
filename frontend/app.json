@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "Daily Task Manager",
+    "slug": "daily-task-manager",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yourcompany.dailytaskmanager",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "This app records audio to create tasks from your voice."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "permissions": ["RECORD_AUDIO", "READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"],
+      "package": "com.yourcompany.dailytaskmanager"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-av",
+        {
+          "microphonePermission": "Allow Daily Task Manager to access your microphone to record voice tasks."
+        }
+      ]
+    ]
+  }
+}
