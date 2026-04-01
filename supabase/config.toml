@@ -1,7 +1,7 @@
 [project]
 # Your Supabase project ref — find it at:
 # Dashboard → Project Settings → General → Reference ID
-id = "your-project-ref"
+id = "vvdxhehfujqfwecvapep"
 
 [api]
 enabled = true
