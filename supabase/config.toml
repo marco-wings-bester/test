@@ -1,0 +1,46 @@
+[project]
+# Your Supabase project ref — find it at:
+# Dashboard → Project Settings → General → Reference ID
+id = "your-project-ref"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "storage"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 15
+
+[studio]
+enabled = true
+port = 54323
+
+[inbucket]
+enabled = false
+
+[storage]
+enabled = true
+
+[auth]
+enabled = false   # No auth for this app
+
+[edge_runtime]
+enabled = true
+policy = "oneshot"
+
+# ─── Edge Function secrets ────────────────────────────────────────────────────
+# Set these with:  supabase secrets set KEY=value
+# Or in the Supabase Dashboard → Edge Functions → Secrets
+#
+# Required:
+#   OPENAI_API_KEY          (for Whisper transcription)
+#   ANTHROPIC_API_KEY       (for Claude task synthesis)
+#
+# Optional overrides:
+#   TRANSCRIPTION_PROVIDER  openai | google  (default: openai)
+#   LLM_PROVIDER            claude | openai  (default: claude)
+#   GOOGLE_SERVICE_ACCOUNT_JSON   (base64-encoded JSON, only if using Google STT)
