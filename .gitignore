@@ -1,0 +1,19 @@
+# Environment files — never commit secrets
+.env
+.env.local
+.env.*.local
+frontend/.env
+frontend/.env.local
+
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Expo
+frontend/.expo/
+frontend/dist/
+frontend/web-build/
+
+# OS
+.DS_Store
+Thumbs.db
